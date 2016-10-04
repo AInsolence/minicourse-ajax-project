@@ -14,8 +14,14 @@ function loadData() {
     // load streetview
 
     // YOUR CODE GOES HERE!
+    var svAdress = $("#street").val() + ' ' + $("#city").val()
+    $greeting.text('So, you want to live at ' + svAdress + '?')
+    var streetviewUrl = 'https://maps.googleapis.com/maps/api/streetview?size=600x400&location=' + svAdress + ''
+    $body.append("<img class = 'bgimg' src = '" + streetviewUrl + "'>")
 
     return false;
+
 };
+
 
 $('#form-container').submit(loadData);
