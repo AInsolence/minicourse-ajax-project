@@ -23,6 +23,7 @@ function loadData() {
     // Built by LucyBot. www.lucybot.com
 
     var NYurl = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + city + "&sort=newest&api-key=e5879d59e6614412a48e5616b09b01a2";
+    $.getJSON(NYurl, function(data){console.log(data)});
     $.getJSON(NYurl, function(data){
         $nytHeaderElem.text("NY Times Article about " + city + ':');
         articles = data.response.docs;
