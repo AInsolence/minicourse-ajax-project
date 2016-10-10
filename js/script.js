@@ -32,8 +32,14 @@ function loadData() {
             $nytElem.append("<li class = 'article'>" + "<a href = '" + article.web_url + "'>" + article.headline.main + "</a>" + 
                 "<p>" + article.snippet + "</p>" + "</li>")
         }
-
+    }).error(function() { 
+       $nytHeaderElem.text( "NY Times Article about " + city + '  could not be found!');
     })
+
+    var wikiURL = ''
+    $.ajax(wikiURL, dataType(jsonp), success(function(data){
+            console.log(data)
+    }))
 
     return false;
 
