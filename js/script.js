@@ -36,10 +36,18 @@ function loadData() {
        $nytHeaderElem.text( "NY Times Article about " + city + '  could not be found!');
     })
 
-    var wikiURL = ''
-    $.ajax(wikiURL, dataType(jsonp), success(function(data){
-            console.log(data)
-    }))
+    var wikiURL = "https://en.wikipedia.org/w/api.php?action=opensearch&search="
+                     + city + "&format=json&callback=wikiCallback";
+    $.ajax({url : wikiURL,
+            dataType : "jsonp", 
+            success : function(response){
+                    var wArticles = response[1];
+                    for (var i = 0; i < wArticles.length; i++){
+                        var wUrl = "http://en.wikipedia.org/wiki/" + wArticles[1]
+                        $wikiElem.append("<li class = 'wikiArticle'>" + "<a href = '" + wUrl + "'>"
+                         + wArticles[i] + "</a>" + "</li>")};
+                    }
+                })
 
     return false;
 
