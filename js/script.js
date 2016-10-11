@@ -43,9 +43,10 @@ function loadData() {
             success : function(response){
                     var wArticles = response[1];
                     for (var i = 0; i < wArticles.length; i++){
-                        var wUrl = "http://en.wikipedia.org/wiki/" + wArticles[1]
+                        var wArticle = wArticles[i];
+                        var wUrl = "http://en.wikipedia.org/wiki/" + wArticle
                         $wikiElem.append("<li class = 'wikiArticle'>" + "<a href = '" + wUrl + "'>"
-                         + wArticles[i] + "</a>" + "</li>")};
+                         + wArticle + "</a>" + "</li>")};
                     }
                 })
 
