@@ -13,14 +13,13 @@ function loadData() {
 
     // load streetview
 
-    // YOUR CODE GOES HERE!
     city = $("#city").val()
     var svAdress = $("#street").val() + ', ' + city;
     $greeting.text('So, you want to live at ' + svAdress + '?');
     var streetviewUrl = 'https://maps.googleapis.com/maps/api/streetview?size=1600x1200&location=' + svAdress + '';
     $body.append("<img class = 'bgimg' src = '" + streetviewUrl + "'>");
 
-    // Built by LucyBot. www.lucybot.com
+    // load NYT articles
 
     var NYurl = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + city + "&sort=newest&api-key=e5879d59e6614412a48e5616b09b01a2";
     $.getJSON(NYurl, function(data){console.log(data)});
@@ -36,20 +35,22 @@ function loadData() {
        $nytHeaderElem.text( "NY Times Article about " + city + '  could not be found!');
     })
 
+    // load Wikipedia articles
+
+    var wikiRequestTimeout = setTimeout(function(){
+        $wikiElem.text('wikipedia articles could not be found')
+    }, 8000);
+
     var wikiURL = "https://en.wikipedia.org/w/api.php?action=opensearch&search="
                      + city + "&format=json&callback=wikiCallback";
-    $.ajax({url : wikiURL,
-            dataType : "jsonp", 
-            success : function(response){
-                    var wArticles = response[1];
-                    for (var i = 0; i < wArticles.length; i++){
-                        var wArticle = wArticles[i];
-                        var wUrl = "http://en.wikipedia.org/wiki/" + wArticle
-                        $wikiElem.append("<li class = 'wikiArticle'>" + "<a href = '" + wUrl + "'>"
-                         + wArticle + "</a>" + "</li>")};
-                    }
-                })
-
+    $.ajax({url : wikiURL, dataType : "jsonp", success : function(response){
+                                                                            var wArticles = response[1];
+                                                                            for (var i = 0; i < wArticles.length; i++){
+                                                                                var wArticle = wArticles[i];
+                                                                                var wUrl = "http://en.wikipedia.org/wiki/" + wArticle;
+                                                                                $wikiElem.append("<li class = 'wikiArticle'>" + "<a href = '" + wUrl + "'>"+ wArticle + "</a>" + "</li>")};
+            clearTimeout(wikiRequestTimeout);}
+    });
     return false;
 
 };
